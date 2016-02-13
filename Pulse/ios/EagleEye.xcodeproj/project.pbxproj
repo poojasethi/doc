@@ -631,7 +631,11 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = EagleEye;
+<<<<<<< HEAD
 				PROVISIONING_PROFILE = "";
+=======
+				TARGETED_DEVICE_FAMILY = 1;
+>>>>>>> origin/master
 			};
 			name = Debug;
 		};
@@ -653,7 +657,11 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = EagleEye;
+<<<<<<< HEAD
 				PROVISIONING_PROFILE = "";
+=======
+				TARGETED_DEVICE_FAMILY = 1;
+>>>>>>> origin/master
 			};
 			name = Release;
 		};
