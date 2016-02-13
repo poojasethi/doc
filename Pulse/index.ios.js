@@ -17,7 +17,7 @@ var {
 var EagleEye = React.createClass({
   render: function() {
     return (
-      <AppTabBar/>
+      <Text>hello</Text>
     );
   }
 });
