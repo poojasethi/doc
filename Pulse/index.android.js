@@ -11,6 +11,7 @@ var {
   Text,
   View,
   Navigator,
+  Switch
 } = React;
 
 // var MySceneComponent = React.createClass({
@@ -61,7 +62,7 @@ var EagleEye = React.createClass({
         renderScene={(route, navigator) =>
           <View>
             <CheckBox label='Sharp' checked={false} onChange={() => {}}/>
-            <CheckBox label='Dull' checked={false} onChange={() => {}}/>
+            <CheckBox style={styles.detailsCheck} label='Dull' checked={false} onChange={() => {}}/>
             <CheckBox label='Crashing' checked={false} onChange={() => {}}/>
             <CheckBox label='Burning' checked={false} onChange={() => {}}/>
             <CheckBox label='Tearing' checked={false} onChange={() => {}}/>
@@ -70,6 +71,7 @@ var EagleEye = React.createClass({
             <CheckBox label='Constant' checked={false} onChange={() => {}}/>
             <CheckBox label='Throbbing' checked={false} onChange={() => {}}/>
             <Text>Applying pressure</Text>
+            <Switch></Switch>
           </View>
         }
       />
@@ -95,6 +97,9 @@ var styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  detailsCheck: {
+    color: 'rgb(22, 106, 249)'
+  }
 });
 
 AppRegistry.registerComponent('EagleEye', () => EagleEye);
