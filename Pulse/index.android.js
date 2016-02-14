@@ -69,7 +69,7 @@ var EagleEye = React.createClass({
             <CheckBox label='Intermittent' checked={false} onChange={() => {}}/>
             <CheckBox label='Constant' checked={false} onChange={() => {}}/>
             <CheckBox label='Throbbing' checked={false} onChange={() => {}}/>
-
+            <Text>Applying pressure</Text>
           </View>
         }
       />
