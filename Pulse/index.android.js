@@ -60,7 +60,7 @@ var EagleEye = React.createClass({
       <Navigator
         initialRoute={{name: 'My First Scene', index: 0}}
         renderScene={(route, navigator) =>
-          <View>
+          <View style={styles.painQuestions}>
             <CheckBox label='Sharp' checked={false} onChange={() => {}}/>
             <CheckBox style={styles.detailsCheck} label='Dull' checked={false} onChange={() => {}}/>
             <CheckBox label='Crashing' checked={false} onChange={() => {}}/>
@@ -97,8 +97,14 @@ var styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  painQuestions: {
+    marginTop: 20,
+    marginLeft: 30,
+    marginRight: 30
+  },
   detailsCheck: {
-    color: 'rgb(22, 106, 249)'
+    color: 'rgb(22, 106, 249)',
+    fontSize: 100
   }
 });
 
