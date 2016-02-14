@@ -18,7 +18,7 @@ var {
 } = React;
 
 var Button = require('react-native-button');
-var React = require('react-native');
+// var CheckBox = require('react-native-checkbox');
 
 var HomePageComponent = React.createClass({
   getInitialState: function() {
@@ -154,6 +154,16 @@ var PainPageComponent = React.createClass({
   },
 });
 
+var DetailsPageComponent = React.createClass({
+  render: function() {
+    return (
+          <View style={styles.painQuestions}>
+            <Text>Applying pressure</Text>
+          </View>
+    );
+  }
+});
+
 var EagleEye = React.createClass({
   render: function() {
     return (
@@ -211,11 +221,16 @@ function getPage(route, navigator) {
     //     />);
     //     break;
     // case 'Pain':
-      return (
-        <PainPageComponent
-          name={route.name}
-        />);
-      break;
+      // return (
+      //   <PainPageComponent
+      //     name={route.name}
+      //   />);
+      // break;
+      // case 'Details':
+        return (
+          <DetailsPageComponent
+            name={route.name}
+          />);
     default:
       break;
   }
@@ -249,6 +264,12 @@ var styles = StyleSheet.create({
 
   painList: {
     marginTop: 55,
+  },
+
+  painQuestions: {
+    marginTop: 55,
+    marginLeft: 30,
+    marginRight: 30
   },
 
   bodyimage: {
