@@ -23,6 +23,7 @@ var {
 //   }
 // });
 var Button = require('react-native-button');
+var CheckBox = require('react-native-checkbox');
 var React = require('react-native');
 
 var MySceneComponent = React.createClass({
@@ -58,22 +59,13 @@ var EagleEye = React.createClass({
       <Navigator
         initialRoute={{name: 'My First Scene', index: 0}}
         renderScene={(route, navigator) =>
-          <MySceneComponent
-            name={route.name}
-            buttonText={'hello there'}
-            onForward={() => {
-              var nextIndex = route.index + 1;
-              navigator.push({
-                name: 'Scene ' + nextIndex,
-                index: nextIndex,
-              });
-            }}
-            onBack={() => {
-              if (route.index > 0) {
-                navigator.pop();
-              }
-            }}
-          />
+          <View>
+            <CheckBox label='Sharp' checked={false} onChange={() => {}}/>
+            <CheckBox label='Dull' checked={false} onChange={() => {}}/>
+            <CheckBox label='Crashing' checked={false} onChange={() => {}}/>
+            <CheckBox label='Burning' checked={false} onChange={() => {}}/>
+            <CheckBox label='Tearing' checked={false} onChange={() => {}}/>
+          </View>
         }
       />
     );
