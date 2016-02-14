@@ -1,7 +1,7 @@
-![Logo](./devpost_hero.png)
-
 # pulse
 Meaningful pain logging for patients.
+
+![Logo](./devpost_hero.png)
 
 ## Inspiration
 Hospital pain rating charts show the severity of pain, but when we spoke to medical professionals they wanted a greater level of detail. A single pain level datapoint doesn’t let doctors follow trends when they change their treatment plan.
