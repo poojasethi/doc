@@ -1,5 +1,6 @@
-Pulse/android/
-Pulse/ios/
+Pulse/android/**/*
+Pulse/ios/**/*
+
 
 # Below is automatically generated (node,linux,osx,windows)
 
