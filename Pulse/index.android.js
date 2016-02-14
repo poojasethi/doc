@@ -15,10 +15,11 @@ var {
   ListView,
   ToolbarAndroid,
   TouchableHighlight,
+  Switch
 } = React;
 
 var Button = require('react-native-button');
-// var CheckBox = require('react-native-checkbox');
+var CheckBox = require('react-native-checkbox');
 
 var HomePageComponent = React.createClass({
   getInitialState: function() {
@@ -34,20 +35,16 @@ var HomePageComponent = React.createClass({
           source={require('./images/assets/human_body/drawable-xhdpi/asset0.png')}
           style={styles.bodyimage}/>
         <Button
-          style={{fontSize: 100, color: 'green'}}
-          styleDisabled={{color: 'red'}}
+          style={styles.homeButton}
           onPress={this._handlePressForward}
         >
-          {this.state.buttonText}
+          Done
         </Button>
       </View>
     );
   },
 
   _handlePressForward: function(event) {
-    this.setState({
-      buttonText: '-->'
-    })
     this.props.onForward();
   },
 });
@@ -150,16 +147,59 @@ var PainPageComponent = React.createClass({
   },
 
   _onPress: function(event) {
-    console.log('POOOOOJAAAA')
+    console.log('Submitted pain rating');
+    this.props.onForward();
   },
 });
 
 var DetailsPageComponent = React.createClass({
+  getInitialState: function() {
+    return { 
+      checkedMap: {},
+    };
+  },
+
   render: function() {
+    var pageComponent = this;
+    var getCheckBox = function(label) {
+      return (
+        <View style={styles.detailsCheckWrapper}>
+          <CheckBox
+            labelStyle={styles.detailsCheck}
+            label={label}
+            checked={pageComponent.state.checkedMap[label]}
+            onChange={function() {
+              var newCheckedMap = pageComponent.state.checkedMap;
+              newCheckedMap[this.label] = !newCheckedMap[this.label];
+              pageComponent.setState({
+                checkedMap: newCheckedMap
+              });
+            }}/>
+        </View>
+      );
+    }
+
     return (
-          <View style={styles.painQuestions}>
-            <Text>Applying pressure</Text>
+      <View style={styles.painQuestions}>
+          <View>
+            <Text style={styles.detailsTitle}>Frequency</Text>
+            {getCheckBox('Sharp')}
+            {getCheckBox('Dull')}
+            {getCheckBox('Crashing')}
+            {getCheckBox('Burning')}
+            {getCheckBox('Tearing')}
           </View>
+          <View>
+            <Text style={styles.detailsTitle}>Frequency</Text>
+            {getCheckBox('Intermittent')}
+            {getCheckBox('Constant')}
+            {getCheckBox('Throbbing')}
+          </View>
+          <View>
+            <Text style={styles.detailsTitle}>Applying pressure...</Text>
+            <Switch></Switch>
+          </View>
+      </View>
     );
   }
 });
@@ -200,33 +240,47 @@ var routeMapper = {
 function getPage(route, navigator) {
   switch(route.name) {
     case 'Home':
-    //   return (
-    //     <HomePageComponent
-    //       name={route.name}
-    //       buttonText={'Done'}
-    //       onForward={() => {
-    //         var nextIndex = route.index + 1;
-    //         navigator.push({
-    //           name: 'Pain',
-    //           index: nextIndex,
-    //         });
-    //         console.log(route);
-    //         console.log(navigator);
-    //       }}
-    //       onBack={() => {
-    //         if (route.index > 0) {
-    //           navigator.pop();
-    //         }
-    //       }}
-    //     />);
-    //     break;
-    // case 'Pain':
-      // return (
-      //   <PainPageComponent
-      //     name={route.name}
-      //   />);
-      // break;
-      // case 'Details':
+      return (
+        <HomePageComponent
+          name={route.name}
+          buttonText={'Done'}
+          onForward={() => {
+            var nextIndex = route.index + 1;
+            navigator.push({
+              name: 'Pain',
+              index: nextIndex,
+            });
+            console.log(route);
+            console.log(navigator);
+          }}
+          onBack={() => {
+            if (route.index > 0) {
+              navigator.pop();
+            }
+          }}
+        />);
+        break;
+      case 'Pain':
+      return (
+        <PainPageComponent
+          name={route.name}
+          onForward={() => {
+            var nextIndex = route.index + 1;
+            navigator.push({
+              name: 'Details',
+              index: nextIndex,
+            });
+            console.log(route);
+            console.log(navigator);
+          }}
+          onBack={() => {
+            if (route.index > 0) {
+              navigator.pop();
+            }
+          }}
+        />);
+      break;
+      case 'Details':
         return (
           <DetailsPageComponent
             name={route.name}
@@ -238,28 +292,36 @@ function getPage(route, navigator) {
 
 var styles = StyleSheet.create({
   navBar: {
-    backgroundColor: 'cyan',
+    backgroundColor: 'rgb(22, 131, 251)',
     flex: 1,
     flexDirection: 'row',
-    borderWidth: 1,
     alignItems: 'center',
+    paddingBottom: 10,
   },
 
   navBarText: {
     fontSize: 32,
     marginVertical: 20,
-    borderWidth: 4,
-    borderColor: 'red',
-    backgroundColor: 'yellow',
     margin: 68,
-    color: 'orange',
+    color: 'white',
+  },
+
+  homeButton: {
+    color: 'white',
+    borderWidth: 1,
+    borderColor: 'red',
+    backgroundColor: 'rgb(22, 106, 249)',
+    width: 350,
+    height: 50,
+    flex: 1,
+    textAlign:'center',
   },
 
   homePageContainer: {
     flex:1,
     alignItems:'center',
-    flexDirection:'row',
-    justifyContent:'center',
+    flexDirection: 'column',
+    justifyContent: 'flex-end'
   },
 
   painList: {
@@ -267,9 +329,27 @@ var styles = StyleSheet.create({
   },
 
   painQuestions: {
-    marginTop: 55,
+    marginTop: 75,
     marginLeft: 30,
-    marginRight: 30
+    marginRight: 30,
+  },
+
+  detailsCheck: {
+    color: 'rgb(22, 106, 249)',
+    fontSize: 15,
+    borderWidth: 1,
+    marginBottom: 10,
+    lineHeight: 20,
+  },
+
+  detailsCheckWrapper: {
+    marginTop: 4,
+    marginBottom: 4,
+  },
+
+  detailsTitle: {
+    fontSize: 18,
+    marginBottom: 10,
   },
 
   bodyimage: {
@@ -278,7 +358,7 @@ var styles = StyleSheet.create({
     // flexDirection:'row',
     // justifyContent:'center',
     // backgroundColor:'blue',
-  }
+  },
 });
 
 AppRegistry.registerComponent('EagleEye', () => EagleEye);
