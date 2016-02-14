@@ -15,24 +15,48 @@ var {
   ListView,
   ToolbarAndroid,
   TouchableHighlight,
-  Switch
+  Switch,
+  ToastAndroid,
 } = React;
 
 var Button = require('react-native-button');
 var CheckBox = require('react-native-checkbox');
 
+var logs = [];
+
 var HomePageComponent = React.createClass({
   getInitialState: function() {
     return {
-      buttonText: this.props.buttonText
+      buttonText: this.props.buttonText,
+      dotData: [],
     };
   },
 
+  getDots: function() {
+    var dotData = this.state.dotData;
+    return dotData.map(function(data) {
+      var transform = [{translateX: data.x}, {translateY: data.y - 150}];
+      var positionStyles = {transform: transform};
+      return (
+        <View style={[styles.dot, positionStyles]}></View>
+      );
+    });
+  },
+
   render: function() {
+    var dots = this.getDots();
     return (
-      <View style={styles.homePageContainer}>
+      <View 
+        style={styles.homePageContainer}
+        onResponderMove={this.setPosition}
+        onResponderRelease={this.resetPosition}
+        onStartShouldSetResponder={this._onStartShouldSetResponder}
+        onMoveShouldSetResponder={this._onMoveShouldSetResponder}>
+        <View style={{position: 'absolute'}}>
+          {dots}
+        </View>
         <Image
-          source={require('./images/assets/human_body/drawable-xhdpi/asset0.png')}
+          source={require('./images/assets/human_body/drawable-hdpi/asset0.png')}
           style={styles.bodyimage}/>
         <Button
           style={styles.homeButton}
@@ -47,6 +71,32 @@ var HomePageComponent = React.createClass({
   _handlePressForward: function(event) {
     this.props.onForward();
   },
+
+  setPosition: function(event) {
+    console.log("setPosition");
+  },
+
+  resetPosition: function(event) {
+    console.log("resetPosition");
+  },
+
+   _onStartShouldSetResponder: function(event) {
+    console.log("start should set responder");
+  },
+
+  _onMoveShouldSetResponder: function(event) {
+    var dots = this.state.dotData;
+    dots.push({
+      x: event.nativeEvent.pageX,
+      y: event.nativeEvent.pageY,
+    });
+    this.setState(dots);
+    console.log('move', {
+      x: event.nativeEvent.pageX,
+      y: event.nativeEvent.pageY,
+    });
+    // console.log("move should set responder");
+  }
 });
 
 var PainPageComponent = React.createClass({
@@ -125,6 +175,7 @@ var PainPageComponent = React.createClass({
               height: 50,
               marginLeft: 10,
             }}
+            resizeMode={"cover"}
             />
           <Text
             style={{
@@ -148,6 +199,7 @@ var PainPageComponent = React.createClass({
 
   _onPress: function(event) {
     console.log('Submitted pain rating');
+    console.log(event);
     this.props.onForward();
   },
 });
@@ -195,12 +247,19 @@ var DetailsPageComponent = React.createClass({
             {getCheckBox('Constant')}
             {getCheckBox('Throbbing')}
           </View>
-          <View>
-            <Text style={styles.detailsTitle}>Applying pressure...</Text>
-            <Switch></Switch>
+          <View style={styles.homePageContainer}>
+            <Button
+              style={styles.homeButton}
+              onPress={this._handlePressForward}
+            >Done</Button>
           </View>
       </View>
     );
+  },
+
+  _handlePressForward: function(event) {
+    ToastAndroid.show('Logged your submission!', ToastAndroid.SHORT);
+    this.props.onForward();
   }
 });
 
@@ -250,8 +309,6 @@ function getPage(route, navigator) {
               name: 'Pain',
               index: nextIndex,
             });
-            console.log(route);
-            console.log(navigator);
           }}
           onBack={() => {
             if (route.index > 0) {
@@ -270,8 +327,6 @@ function getPage(route, navigator) {
               name: 'Details',
               index: nextIndex,
             });
-            console.log(route);
-            console.log(navigator);
           }}
           onBack={() => {
             if (route.index > 0) {
@@ -284,7 +339,22 @@ function getPage(route, navigator) {
         return (
           <DetailsPageComponent
             name={route.name}
+            onForward={() => {
+            var nextIndex = route.index + 1;
+            navigator.push({
+              name: 'Home',
+              index: nextIndex,
+            });
+            console.log(route);
+            console.log(navigator);
+            }}
+            onBack={() => {
+              if (route.index > 0) {
+                navigator.pop();
+              }
+            }}
           />);
+        break;
     default:
       break;
   }
@@ -301,20 +371,24 @@ var styles = StyleSheet.create({
 
   navBarText: {
     fontSize: 32,
-    marginVertical: 20,
+    fontWeight: 'bold',
+    marginVertical: 10,
     margin: 68,
     color: 'white',
+    paddingBottom: 10,
   },
 
   homeButton: {
     color: 'white',
     borderWidth: 1,
     borderColor: 'red',
-    backgroundColor: 'rgb(22, 106, 249)',
+    backgroundColor: 'rgb(255, 1, 128)',
     width: 350,
     height: 50,
-    flex: 1,
     textAlign:'center',
+    fontSize: 32,
+    marginVertical: 10,
+    borderRadius: 5,
   },
 
   homePageContainer: {
@@ -358,7 +432,17 @@ var styles = StyleSheet.create({
     // flexDirection:'row',
     // justifyContent:'center',
     // backgroundColor:'blue',
+    marginBottom: 40,
   },
+
+  dot: {
+    position: 'absolute',
+    backgroundColor: 'red',
+    opacity: 0.3,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+  }
 });
 
 AppRegistry.registerComponent('EagleEye', () => EagleEye);
