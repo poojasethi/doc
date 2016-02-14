@@ -1,4 +1,4 @@
-# pulse
+# Pulse
 Meaningful pain logging for patients.
 
 ![Logo](./devpost_hero.png)
