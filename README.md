@@ -4,7 +4,7 @@ Meaningful pain logging for patients.
 ![Logo](./devpost_hero.png)
 
 ## Inspiration
-Hospital pain rating charts show the severity of pain, but when we spoke to medical professionals they wanted a greater level of detail. A single pain level datapoint doesn’t let doctors follow trends when they change their treatment plan.
+Hospital pain rating charts show the severity of pain, but when we spoke to medical professionals they wanted a greater level of detail. A single pain level datapoint doesn’t let doctors follow trends when they change their treatment plan. Dr. Geoffery Tso had a lot to say about this issue [here](https://docs.google.com/document/d/1KyA9MMZDzQbTksFtZWs8jU1701po_RY9P1B-hZrZ4xQ/preview).
 
 ## What it does
 Pulse allows a patient in hospital care or checking in to easily tell doctors where they’re experiencing pain and how bad it is. This can help doctors triage incoming patients and monitor response to new treatment plans for patients with chronic pain.
